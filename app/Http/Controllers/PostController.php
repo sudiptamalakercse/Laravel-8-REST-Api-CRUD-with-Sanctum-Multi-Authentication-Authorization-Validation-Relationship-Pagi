@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Student;
+use App\Models\Post;
 
-class StudentController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return Student::all();
+        return Post::all();
     }
 
     /**
@@ -40,7 +40,12 @@ class StudentController extends Controller
             'city' => 'required',
             'fees' => 'required',
         ]);
-        return Student::create($request->all());
+
+        $admin=auth('admin')->user();
+
+        return $admin->posts()->create($request->all());
+
+       // return Post::create($request->all());
     }
 
     /**
@@ -51,7 +56,7 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        return Student::find($id);
+        return Post::find($id);
     }
 
     /**
@@ -74,9 +79,17 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $student = Student::find($id);
-        $student->update($request->all());
-        return $student;
+        $request->validate([
+            'name' => 'required',
+            'city' => 'required',
+            'fees' => 'required',
+        ]);
+
+        $post = Post::find($id);
+
+        $post->update($request->all());
+        
+        return $post;
     }
 
     /**
@@ -87,7 +100,7 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        return Student::find($id)->delete();
+        return Post::find($id)->delete();
     }
 
     /**
@@ -98,6 +111,6 @@ class StudentController extends Controller
      */
     public function search($city)
     {
-        return Student::where('city', $city)->get();
+        return Post::where('city', $city)->get();
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
 
-class StudentSeeder extends Seeder
+class PostSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,10 +17,11 @@ class StudentSeeder extends Seeder
     {
         $faker = Faker::create();
         foreach(range(1, 5) as $value){
-            DB::table('students')->insert([
+            DB::table('posts')->insert([
                 'name' => $faker->name(),
                 'city' => $faker->city(),
-                'fees' => 100.50
+                'fees' => 100.50,
+                'admin_id' =>1
             ]);
         }
     }
