@@ -13,8 +13,10 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return Post::all();
+    {   
+        $posts=Post::all();
+        $final_posts=$this->modify_posts_by_admin_relationship($posts);
+        return $final_posts;
     }
 
     /**
@@ -56,7 +58,21 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return Post::find($id);
+        $post=Post::find($id);
+
+        $final_post=[];
+            
+            $final_post['id']=$post->id;
+            $final_post['name']=$post->name;
+            $final_post['city']=$post->city;
+            $final_post['fees']=$post->fees;
+            $final_post['admin_id']=$post->admin->id;
+            $final_post['admin_name']=$post->admin->name;
+            $final_post['admin_email']=$post->admin->email;
+            $final_post['created_at']=$post->created_at;
+            $final_post['updated_at']=$post->updated_at;
+        
+        return $final_post;
     }
 
     /**
@@ -111,6 +127,33 @@ class PostController extends Controller
      */
     public function search($city)
     {
-        return Post::where('city', $city)->get();
+        $posts=Post::where('city', $city)->get();
+        $final_posts=$this->modify_posts_by_admin_relationship($posts);
+        return $final_posts;
     }
+
+     private function modify_posts_by_admin_relationship($posts)
+     {
+        $final_posts=[];
+
+        $posts->each(function ($post) use (&$final_posts) {
+          
+            $current_post=[];
+            
+            $current_post['id']=$post->id;
+            $current_post['name']=$post->name;
+            $current_post['city']=$post->city;
+            $current_post['fees']=$post->fees;
+            $current_post['admin_id']=$post->admin->id;
+            $current_post['admin_name']=$post->admin->name;
+            $current_post['admin_email']=$post->admin->email;
+            $current_post['created_at']=$post->created_at;
+            $current_post['updated_at']=$post->updated_at;
+            
+            array_push($final_posts,$current_post);
+
+        });
+                
+        return $final_posts;
+     }
 }
