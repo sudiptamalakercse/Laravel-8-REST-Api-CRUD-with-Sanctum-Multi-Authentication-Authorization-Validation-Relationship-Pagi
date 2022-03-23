@@ -66,9 +66,7 @@ class PostController extends Controller
             $final_post['name']=$post->name;
             $final_post['city']=$post->city;
             $final_post['fees']=$post->fees;
-            $final_post['admin_id']=$post->admin->id;
-            $final_post['admin_name']=$post->admin->name;
-            $final_post['admin_email']=$post->admin->email;
+            $final_post['admin']=$post->admin;
             $final_post['created_at']=$post->created_at;
             $final_post['updated_at']=$post->updated_at;
         
@@ -144,9 +142,7 @@ class PostController extends Controller
             $current_post['name']=$post->name;
             $current_post['city']=$post->city;
             $current_post['fees']=$post->fees;
-            $current_post['admin_id']=$post->admin->id;
-            $current_post['admin_name']=$post->admin->name;
-            $current_post['admin_email']=$post->admin->email;
+            $current_post['admin']=$post->admin;
             $current_post['created_at']=$post->created_at;
             $current_post['updated_at']=$post->updated_at;
             
