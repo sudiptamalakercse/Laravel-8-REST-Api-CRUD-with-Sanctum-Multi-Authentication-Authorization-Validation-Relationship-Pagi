@@ -151,5 +151,29 @@ class PostController extends Controller
         });
                 
         return $final_posts;
+     }//end
+
+
+    public function delete_selected_post(Request $request)
+    {
+       
+       $post_ids=$request->post_ids;
+
+      if(is_array($post_ids) && count($post_ids)>0){
+        
+        Post::destroy($post_ids);
+
+        return response([
+            'message' => 'Selected Posts are Deleted Successfully!!',
+        ], 200); 
+    
      }
+     else
+     {
+        return response([
+            'message' => 'Please Select the Posts to Delete!!',
+        ], 401); 
+     }
+       
+    }//end
 }

@@ -69,5 +69,6 @@ class AdminController extends Controller
             'token' => $token
         ], 200);
 
-    } 
+    }//end
+    
 }

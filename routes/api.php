@@ -32,6 +32,7 @@ Route::middleware(['auth:admin'])->group(function(){
 Route::post('/posts', [PostController::class, 'store']);
 Route::put('/posts/{id}', [PostController::class, 'update']);
 Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+Route::post('/posts/delete-selected', [PostController::class, 'delete_selected_post']);
 Route::post('/logout/admin', [AdminController::class, 'logout']);
 
 });

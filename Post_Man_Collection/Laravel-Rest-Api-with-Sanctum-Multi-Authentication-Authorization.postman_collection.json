@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d5469024-5597-49ff-9b08-802869e5cdc9",
+		"_postman_id": "0f43c525-1d81-4fd3-86b4-271608ec1420",
 		"name": "Laravel-Rest-Api-with-Sanctum-Multi-Authentication-Authorization",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -16,7 +16,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "3|3MFjK6lOcVXfJ2OgHavnPLb3anCuy1WTobrcMC73",
+									"value": "8|t28CI4BwAGF4SOZGf9IdD9DeC9f52aCHYuxWeNGM",
 									"type": "string"
 								}
 							]
@@ -49,7 +49,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "3|3MFjK6lOcVXfJ2OgHavnPLb3anCuy1WTobrcMC73",
+									"value": "8|t28CI4BwAGF4SOZGf9IdD9DeC9f52aCHYuxWeNGM",
 									"type": "string"
 								}
 							]
@@ -63,13 +63,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/posts/3",
+							"raw": "{{url}}/posts/2",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"3"
+								"2"
 							]
 						}
 					},
@@ -83,7 +83,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "3|3MFjK6lOcVXfJ2OgHavnPLb3anCuy1WTobrcMC73",
+									"value": "8|t28CI4BwAGF4SOZGf9IdD9DeC9f52aCHYuxWeNGM",
 									"type": "string"
 								}
 							]
@@ -123,7 +123,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|yhW1nCwfID04k0myAAdK6qeEpfmni517nMSXpKPe",
+									"value": "7|j21RfLqjwokz6PmvUzbwppKvavgbXoxZKFawwY7E",
 									"type": "string"
 								}
 							]
@@ -146,7 +146,7 @@
 								},
 								{
 									"key": "city",
-									"value": "Khulna",
+									"value": "Dhaka",
 									"type": "default"
 								},
 								{
@@ -176,7 +176,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "4|2awJ4WggCbUI0zf0nECyoj50V2w4PH4Z7lbKfhr5",
+									"value": "7|j21RfLqjwokz6PmvUzbwppKvavgbXoxZKFawwY7E",
 									"type": "string"
 								}
 							]
@@ -194,29 +194,29 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "Dip Malaker",
+									"value": "Robin Paul",
 									"type": "default"
 								},
 								{
 									"key": "city",
-									"value": "Sherpur",
+									"value": "Kaliakur",
 									"type": "default"
 								},
 								{
 									"key": "fees",
-									"value": "500.5",
+									"value": "100.5",
 									"type": "default"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url}}/posts/1",
+							"raw": "{{url}}/posts/2",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -257,6 +257,55 @@
 					"response": []
 				},
 				{
+					"name": "Delete Selected Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9|GzG6fhZ4LCMb1gLeuBESHU42Cgd8m0xES4yS3eBI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "post_ids[]",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "post_ids[]",
+									"value": "2",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/posts/delete-selected",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"delete-selected"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Logout Admin",
 					"request": {
 						"auth": {
@@ -264,7 +313,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "4|2awJ4WggCbUI0zf0nECyoj50V2w4PH4Z7lbKfhr5",
+									"value": "7|j21RfLqjwokz6PmvUzbwppKvavgbXoxZKFawwY7E",
 									"type": "string"
 								}
 							]
@@ -307,7 +356,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "3|3MFjK6lOcVXfJ2OgHavnPLb3anCuy1WTobrcMC73",
+									"value": "6|33YvnKhCEnwaSloODRekGfoVRiIpieC2zzvz5Iv1",
 									"type": "string"
 								}
 							]
@@ -358,12 +407,12 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "user1",
+									"value": "user2",
 									"type": "default"
 								},
 								{
 									"key": "email",
-									"value": "user1@gmail.com",
+									"value": "user2@gmail.com",
 									"type": "default"
 								},
 								{
@@ -446,12 +495,12 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "admin1",
+									"value": "admin2",
 									"type": "default"
 								},
 								{
 									"key": "email",
-									"value": "admin1@gmail.com",
+									"value": "admin2@gmail.com",
 									"type": "default"
 								},
 								{
