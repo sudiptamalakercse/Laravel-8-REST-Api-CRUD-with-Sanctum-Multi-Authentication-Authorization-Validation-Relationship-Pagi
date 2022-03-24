@@ -29,15 +29,21 @@ class PostController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $request->validate([
+      //Authorization Check
+
+        if($request->user()->cannot('create_post_by_admin',Post::class)) {
+        
+        return response([
+            'message' => 'Unauthorized!!',
+        ], 403); 
+
+        }
+       
+       // End Authorization Check 
+
+       $request->validate([
             'name' => 'required',
             'city' => 'required',
             'fees' => 'required',
@@ -46,8 +52,6 @@ class PostController extends Controller
         $admin=auth('admin')->user();
 
         return $admin->posts()->create($request->all());
-
-       // return Post::create($request->all());
     }
 
     /**
@@ -93,6 +97,9 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+      //  $this->authorize('update_by_admin', $post);
+
         $request->validate([
             'name' => 'required',
             'city' => 'required',
@@ -100,6 +107,18 @@ class PostController extends Controller
         ]);
 
         $post = Post::find($id);
+        
+        //Authorization Check
+
+        if($request->user()->cannot('update_by_admin',$post)) {
+        
+        return response([
+            'message' => 'Unauthorized!!',
+        ], 403); 
+
+        }
+        
+        // End Authorization Check 
 
         $post->update($request->all());
         
@@ -112,9 +131,42 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        return Post::find($id)->delete();
+
+        $post=Post::find($id);
+
+        if($post){
+        
+        //Authorization Check
+
+        if($request->user()->cannot('delete_by_admin',$post)) {
+        
+        return response([
+            'message' => 'Unauthorized!!',
+        ], 403); 
+
+        }
+        
+        // End Authorization Check 
+
+        $is_delete=$post->delete();
+
+        if($is_delete){
+        
+        return response([
+            'message' => 'The Post is Deleted Successfully!!',
+        ], 200); 
+
+        }
+        }
+        else{
+
+        return response([
+            'message' => 'The Post Does Not Exist!!',
+        ], 401); 
+
+        }
     }
 
     /**
@@ -157,8 +209,28 @@ class PostController extends Controller
     public function delete_selected_post(Request $request)
     {
        
-       $post_ids=$request->post_ids;
+        $post_ids=$request->post_ids;
+         
+        //Authorization Check
 
+        $admin=$request->user();
+
+        foreach ($post_ids as $post_id){
+       
+         $post=Post::find($post_id);
+
+         if($admin->cannot('delete_by_admin', $post)) {
+            
+             return response([
+            'message' => 'Unauthorized!!',
+             ], 403); 
+
+          }
+      
+         }
+
+         //End Authorization Check
+ 
       if(is_array($post_ids) && count($post_ids)>0){
         
         Post::destroy($post_ids);
