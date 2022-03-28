@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Http\Resources\PostResource;
 
 class PostController extends Controller
 {
@@ -14,9 +15,9 @@ class PostController extends Controller
      */
     public function index()
     {   
-        $posts=Post::all();
-        $final_posts=$this->modify_posts_by_admin_relationship($posts);
-        return $final_posts;
+        $posts=Post::paginate(2);
+
+        return PostResource::collection($posts);
     }
 
     /**
@@ -51,7 +52,7 @@ class PostController extends Controller
 
         $admin=auth('admin')->user();
 
-        return $admin->posts()->create($request->all());
+        return new PostResource($admin->posts()->create($request->all()));
     }
 
     /**
@@ -64,17 +65,7 @@ class PostController extends Controller
     {
         $post=Post::find($id);
 
-        $final_post=[];
-            
-            $final_post['id']=$post->id;
-            $final_post['name']=$post->name;
-            $final_post['city']=$post->city;
-            $final_post['fees']=$post->fees;
-            $final_post['admin']=$post->admin;
-            $final_post['created_at']=$post->created_at;
-            $final_post['updated_at']=$post->updated_at;
-        
-        return $final_post;
+        return new PostResource($post);
     }
 
     /**
@@ -122,7 +113,7 @@ class PostController extends Controller
 
         $post->update($request->all());
         
-        return $post;
+        return new PostResource($post);
     }
 
     /**
@@ -177,34 +168,11 @@ class PostController extends Controller
      */
     public function search($city)
     {
-        $posts=Post::where('city', $city)->get();
-        $final_posts=$this->modify_posts_by_admin_relationship($posts);
-        return $final_posts;
+        $posts=Post::where('city', $city)->paginate(2);
+
+        return PostResource::collection($posts);
+
     }
-
-     private function modify_posts_by_admin_relationship($posts)
-     {
-        $final_posts=[];
-
-        $posts->each(function ($post) use (&$final_posts) {
-          
-            $current_post=[];
-            
-            $current_post['id']=$post->id;
-            $current_post['name']=$post->name;
-            $current_post['city']=$post->city;
-            $current_post['fees']=$post->fees;
-            $current_post['admin']=$post->admin;
-            $current_post['created_at']=$post->created_at;
-            $current_post['updated_at']=$post->updated_at;
-            
-            array_push($final_posts,$current_post);
-
-        });
-                
-        return $final_posts;
-     }//end
-
 
     public function delete_selected_post(Request $request)
     {
