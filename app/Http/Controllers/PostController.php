@@ -34,7 +34,7 @@ class PostController extends Controller
     {
       //Authorization Check
 
-        if($request->user()->cannot('create_post_by_admin',Post::class)) {
+        if($request->user('admin')->cannot('create_post_by_admin',Post::class)) {
         
         return response([
             'message' => 'Unauthorized!!',
@@ -101,7 +101,7 @@ class PostController extends Controller
         
         //Authorization Check
 
-        if($request->user()->cannot('update_by_admin',$post)) {
+        if($request->user('admin')->cannot('update_by_admin',$post)) {
         
         return response([
             'message' => 'Unauthorized!!',
@@ -131,7 +131,7 @@ class PostController extends Controller
         
         //Authorization Check
 
-        if($request->user()->cannot('delete_by_admin',$post)) {
+        if($request->user('admin')->cannot('delete_by_admin',$post)) {
         
         return response([
             'message' => 'Unauthorized!!',
@@ -181,7 +181,7 @@ class PostController extends Controller
          
         //Authorization Check
 
-        $admin=$request->user();
+        $admin=$request->user('admin');
 
         foreach ($post_ids as $post_id){
        
