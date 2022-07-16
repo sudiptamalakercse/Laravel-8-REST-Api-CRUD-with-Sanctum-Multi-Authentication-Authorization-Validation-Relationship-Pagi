@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {   
-        $posts=Post::paginate(2);
+        $posts=Post::orderBy('id', 'DESC')->paginate(6);
 
         return PostResource::collection($posts);
     }
@@ -166,9 +166,14 @@ class PostController extends Controller
      * @param  int  $city
      * @return \Illuminate\Http\Response
      */
-    public function search($city)
+    public function search($value)
     {
-        $posts=Post::where('city', $city)->paginate(2);
+        $posts=Post::
+        where('name','LIKE','%'.$value.'%')
+        ->orWhere('city','LIKE','%'.$value.'%')
+        ->orWhere('fees','LIKE','%'.$value.'%')
+        ->orderBy('id', 'DESC')
+        ->paginate(6);
 
         return PostResource::collection($posts);
 
